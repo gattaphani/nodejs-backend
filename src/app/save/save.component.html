@@ -1,0 +1,30 @@
+<!-- <p>save works!</p> -->
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-tilte">ADD COUNTRY</h4>
+            <form #countryForm="ngForm" (ngSubmit)="submit(countryForm.value)">
+                <div class="form-group">
+                    <label for="id">ID</label>
+                    <input type="text" name="_id" [(ngModel)]="obj.id" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="id">NAME</label>
+                    <input type="text" name="name" [(ngModel)]="obj.name" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="id">CAPITAL</label>
+                    <input type="text" name="price" [(ngModel)]="obj.price" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="submit" class="btn btn-success">
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
