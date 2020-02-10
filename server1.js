@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const user = require('./nodejs-backend/server/routes/api2');
+const user = require('./server/routes/api2');
 const mongoose = require('mongoose');
 const cors = require('cors')
 
-mongoose.connect('mongodb://localhost:27017/jwtauth');
+mongoose.connect('mongodb://localhost:27017/jwtauth',{useNewUrlParser: true,useUnifiedTopology: true});
 
 const PORT = 3000;
 
@@ -22,5 +22,5 @@ app.use(cors());
 app.use('/user', user);
 
 app.listen(PORT, function(){
-   console.log('Auth Server is running on Port',PORT);
+   console.log('Server is running on Port',PORT);
 });

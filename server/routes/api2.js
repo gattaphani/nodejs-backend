@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../../../models/user2').users;
-const AdUnit = require('../../../models/user2').addUser;
+const User = require('../../models/user2').users;
+const AdUnit = require('../../models/user2').addUser;
 
 router.post('/signup', function (req, res) {
   console.log(req.body);
@@ -14,7 +14,7 @@ router.post('/signup', function (req, res) {
       });
 
     }
-    else {
+
       const user = new User({
         email: req.body.email,
         password: hash
@@ -32,11 +32,11 @@ router.post('/signup', function (req, res) {
           error: error
         });
       });
-    }
+    
   });
 });
 
-router.post('/signin', function (req, res) {
+router.post('/signin',  function (req, res) {
   User.findOne({
     email: req.body.email,
   })
