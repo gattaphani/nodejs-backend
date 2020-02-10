@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../../models/user2');
-const AdUnit = require('../../models/user2');
+const User = require('../../../models/user2').users;
+const AdUnit = require('../../../models/user2').addUser;
 
 router.post('/signup', function (req, res) {
   console.log(req.body);
@@ -16,12 +16,13 @@ router.post('/signup', function (req, res) {
     }
     else {
       const user = new User({
-        // _id: new mongoose.Types.ObjectId(),
         email: req.body.email,
         password: hash
       });
       user.save().then(function (response) {
         console.log(response);
+
+
         res.status(200).json({
           message: 'New user has been created',
           result: response
@@ -77,10 +78,10 @@ router.post('/signin', function (req, res) {
       console.log(error)
       res.status(500).json({
         error: error,
-        message:"password null"
+        message: "password null"
       });
-     
-     
+
+
 
     });
 });
@@ -99,31 +100,59 @@ router.get('/getbyid/:id', function (req, res) {
   });
 })
 
+// router.get('/details', (req,res)=>{
+//   const allData = AdUnit.find();
+//   console.log(allData,'all details')
+//   if(allData){
+//     res.status(200).send({
+//       status: 0,
+//       data: allData
+//     })
+//   }
+//   else {
+//     res.status(404).send({
+//       status: 1,
+//       data : allData
+//     })
+//   }
+// })
 
 
-
-const adUnitRoutes = express.Router();
+// const adUnitRoutes = express.Router();
 // post route
-router.post('/add',function (req, res) {
-  let adUnit = new AdUnit({
+router.post('/add', function (req, res) {
+  // let adUnit = {
+  //   unit_name: req.body.unit_name,
+  //   unit_price: req.body.unit_price
+  // };
+console.log(req.body)
+  AdUnit.create({
     unit_name: req.body.unit_name,
     unit_price: req.body.unit_price
-
-  });
-
-  adUnit.save()
+  })
     .then(adunits => {
-      res.status(200).send(adunits);
+      res.status(200).json(
+        {
+          adUnit: 'AdUnit is added successfully',
+          AdUnit: adunits
+        });
+
     })
     .catch(err => {
-      res.status(400).send(err);
+      res.status(400).send("unable to save to database", err);
     });
+
+  // adUnit.save(function (err,data){
+  //   if(err)
+  //  return res.status(400).json({error: err});
+  //       res.status(200).json({status: 200, data: 'data is inserted sucessfully'})
+  // })
 });
 
 
 
 //get 
-adUnitRoutes.route('/get').get(function (req, res) {
+router.get('/get', function (req, res) {
 
   AdUnit.find(function (err, adUnits) {
     if (err) {
@@ -132,13 +161,12 @@ adUnitRoutes.route('/get').get(function (req, res) {
     else {
       res.status(200).json(adUnits);
       console.log(adUnits);
-
     }
   });
 });
 
 // edit route
-adUnitRoutes.route('/edit/:id').get(function (req, res) {
+router.get('/edit/:id', function (req, res) {
   let id = req.params.id;
   AdUnit.findById(id, function (err, adUnit) {
     if (err) {
@@ -153,7 +181,7 @@ adUnitRoutes.route('/edit/:id').get(function (req, res) {
 });
 
 //  Defined update route
-adUnitRoutes.route('/update/:id').put(function (req, res) {
+router.put('/update/:id', function (req, res) {
   AdUnit.findById(req.params.id, function (err, adUnit) {
     if (!adUnit)
       console.log('Could not load Document', err);
@@ -172,7 +200,7 @@ adUnitRoutes.route('/update/:id').put(function (req, res) {
 });
 
 // Defined delete | remove | destroy route
-adUnitRoutes.route('/delete/:id').delete(function (req, res) {
+router.delete('/delete/:id', function (req, res) {
   AdUnit.findByIdAndRemove({ _id: req.params.id }, function (err, adUnit) {
     if (err)
       res.json(err);

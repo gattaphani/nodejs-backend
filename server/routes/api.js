@@ -4,8 +4,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
-const userSchema = require("../../models/user");
-const authorize = require("../../models/authdb");
+const userSchema = require("../../../models/user");
+const authorize = require("../../../models/authdb");
 const { check, validationResult } = require('express-validator');
 
 // Sign-up
