@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const user = require('./server/routes/api2');
+const user = require('./nodejs-backend/server/routes/api2');
 const mongoose = require('mongoose');
 const cors = require('cors')
+
 mongoose.connect('mongodb://localhost:27017/jwtauth');
 
 const PORT = 3000;

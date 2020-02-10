@@ -1,25 +1,33 @@
   
-const mongoose = require('mongoose');
+var mongoose = require('mongoose');
 
-var user = mongoose.Schema({
-  
-   email: {
+const user = mongoose.Schema({
+   email: 
+   {
      type: String, required: true
     },
-   password: {
+   password: 
+   {
      type: String, required: true
-    }
+   }
 },
 {
    collection:'users'
 });
 
 
-var AdUnit = mongoose.Schema({
-   unit_name: {
+const AdUnit = mongoose.Schema({
+  users: 
+    {
+       type:  mongoose.Schema.Types.ObjectId, 
+       ref: 'User' 
+    },
+   unit_name: 
+   {
      type: String
    },
-   unit_price: {
+   unit_price: 
+   {
      type: String
    }
  },
@@ -27,5 +35,10 @@ var AdUnit = mongoose.Schema({
      collection: 'adunits'
  });
 
- module.exports = mongoose.model('AdUnit', AdUnit);
- module.exports = mongoose.model('User', user);
+ const addUser = mongoose.model('AdUnit', AdUnit);
+ const users = mongoose.model('User', user);
+ module.exports = {
+  addUser,
+  users
+ }
+
